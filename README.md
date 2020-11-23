@@ -1,8 +1,8 @@
 ### Basic techniques used in the design of video games
-Last update : 2020-11-23 20:10
+Last update : 2020-11-23 22:30
 
 Samples:
 
-- Boucing Ball
+- Bouncing Ball
 - Paddle
 - Bouncing Ball On Paddle
