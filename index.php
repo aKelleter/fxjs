@@ -37,15 +37,17 @@
   <div class="container">
     <h1 class="mt-5">FX  Javascript</h1>
     <p class="lead">Basic techniques used in the design of video games</p>
-    <ul>
+    <ol>
         <li><a href="bouncingball.php" target="_blank">Balle rebondissante</a></li>
-    </ul>
+        <li><a href="paddle.php" target="_blank">Paddle</a></li>
+        <li><a href="bouncingballonpaddle.php" target="_blank">Bouncing Ball On Paddle</a></li>
+    </ol>
   </div>
 </main>
 
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <span class="text-muted">FX Javascript - 23112020 15:07</span>
+    <span class="text-muted">FX Javascript - 23112020 22:18</span>
   </div>
 </footer>
 </body>
