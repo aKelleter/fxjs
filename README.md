@@ -1,5 +1,5 @@
 ### Basic techniques used in the design of video games
-Last update : 2020-11-24 15:01
+Last update : 2020-12-02 20:47
 
 Samples:
 
