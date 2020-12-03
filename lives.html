@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop : Score and Win</title>
+    <title>Gamedev Canvas Workshop : Lives</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style>
     	* { padding: 0; margin: 0; }
@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-<h1 class="text-center">Score and Win</h1>
+<h1 class="text-center">Lives</h1>
 <canvas id="myCanvas" width="480" height="320"></canvas>
 <div class="game-over-notify">Game Over</div>
 <script>
@@ -54,6 +54,10 @@
         var brickOffsetLeft = 30;
         var gameOverNotify = document.querySelector('.game-over-notify');
         var interval;
+    // Score
+        var score = 0;
+    // Lives
+        var lives = 3;
     
     // Création du mur de briques    
         var bricks = [];
@@ -77,9 +81,17 @@
     // Incrémentation de la position x/y
     var posX = -2;
     var posY = -2;
-
+    
+    // Ecoute sur l'enfoncement d'une touche
     document.addEventListener("keydown", keyDownHandler, false);
+    
+    // Ecoute sur le relachement d'une touche
     document.addEventListener("keyup", keyUpHandler, false);
+    
+    // Ecoute sur les mouvements de la souris
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+    
+    // Ecoute sur le click de la souris
     gameOverNotify.addEventListener("click", function() {
         document.location.reload();
     });
@@ -140,34 +152,59 @@
 
     function collisionDetection()
     {
-        for(var l = 0 ; l < brickRowCount; l++)
-        {
-            for(var c = 0 ; c < brickColumnCount ; c++)
-            {
-                var b = bricks[l][c];
-                
-                if(b.status == 1)
-                {
-               
-                    if(balleX > b.x && balleX < b.x + brickWidth && balleY > b.y && balleY < b.y + brickHeight)
-                    {
+        for(var l = 0 ; l < brickRowCount; l++) {
+            for(var c = 0 ; c < brickColumnCount ; c++) {
+                var b = bricks[l][c];                
+                if(b.status == 1) {               
+                    if(balleX > b.x && balleX < b.x + brickWidth && balleY > b.y && balleY < b.y + brickHeight) {
                         console.log(b);
                         posY = -posY;
                         b.status = 0;
+                        score++;
+                        if(score == brickRowCount*brickColumnCount) {
+                            alert("C'est gagné, Bravo!");
+                            document.location.reload();                            
+                        }
                     }
                 }        
             }
         }
     }
-    
+
+    function drawScore()
+    {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Score: " + score, 8, 20);
+    }
+
+    function mouseMoveHandler(e)
+    {
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if(relativeX > 0 && relativeX < canvas.width) {
+            paddleX = relativeX - paddleWidth/2;
+        }
+    }
+
+    function drawLives()
+    {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+    }
+
+
+    // --------------------------------------------------------------------------
     function draw()
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         drawBricks()
         drawBall();
-        drawPaddle();       
+        drawPaddle();     
+        drawScore();  
+        drawLives();
         collisionDetection();
-
        
         // Limitation gauche/droite de la balle
         if(balleX + posX > canvas.width - ballRadius || balleX + posX < ballRadius)
@@ -185,9 +222,17 @@
             {
                 posY = -posY;
             } else {
-                gameOverNotify.style.display = 'flex';
-                clearInterval(interval);
-                return;
+                lives--;
+                if(lives == 0) {
+                    alert("GAME OVER");
+                    document.location.reload();                    
+                } else {
+                    balleX = canvas.width/2;
+                    balleY = canvas.height-30;
+                    posX = 2;
+                    posY = -2;
+                    paddleX = (canvas.width-paddleWidth)/2;
+                }
             }            
         }
 
@@ -203,11 +248,13 @@
         balleX += posX;
         balleY += posY; 
 
+        requestAnimationFrame(draw);
+
     }
 
-    interval = setInterval(draw, 15);
+    draw();
 
 </script>
-<footer class="text-center font-weight-light">U 2020-12-02 20:43</footer>
+<footer class="text-center font-weight-light">U 2020-12-03 20:17</footer>
 </body>
 </html>

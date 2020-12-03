@@ -1,7 +1,7 @@
-### Basic techniques used in the design of video games
-Last update : 2020-12-02 20:47
+### BAsic Video game in javascript : Brick-breakers
+Last update : 2020-12-03 20:19
 
- Samples script:
+ The different phases of development:
 
 - Bouncing Ball
 - Paddle
@@ -9,3 +9,5 @@ Last update : 2020-12-02 20:47
 - Bricks In The Wall
 - Bricks Collision 
 - Score and Win
+- With Mouse
+- With Lives
